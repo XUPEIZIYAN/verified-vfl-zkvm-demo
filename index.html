@@ -19,11 +19,7 @@
     --ml-bg: #E6F1FB; --ml-border: #185FA5; --ml-text: #0C447C;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: #fafafa; color: var(--eth-text);
-    line-height: 1.5;
-  }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #fafafa; color: var(--eth-text); line-height: 1.5; }
   .header {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     color: white; padding: 2rem 2rem 1.5rem; text-align: center;
@@ -31,6 +27,26 @@
   .header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.3rem; }
   .header p { font-size: 0.85rem; opacity: 0.8; max-width: 700px; margin: 0 auto; }
   .container { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+
+  /* Framework section */
+  .framework-section { margin-bottom: 2rem; }
+  .framework-section h2 {
+    font-size: 1.1rem; color: var(--eth-purple); margin-bottom: 0.4rem;
+    border-bottom: 2px solid var(--eth-purple); padding-bottom: 0.3rem;
+  }
+  .framework-section > p { font-size: 0.82rem; color: var(--eth-gray); margin-bottom: 0.8rem; }
+  .framework-svg-wrap {
+    background: white; border-radius: 8px; padding: 1rem 0.5rem 0.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1); overflow-x: auto;
+  }
+  .framework-svg-wrap svg { display: block; min-width: 720px; }
+
+  /* Training section */
+  .training-section { }
+  .training-section > h2 {
+    font-size: 1.1rem; color: var(--eth-purple); margin-bottom: 1rem;
+    border-bottom: 2px solid var(--eth-purple); padding-bottom: 0.3rem;
+  }
 
   /* Controls */
   .controls {
@@ -50,116 +66,42 @@
   .btn:disabled { background: #999; cursor: not-allowed; }
   .btn.reset { background: #888; }
 
-  /* Architecture diagram */
-  .arch-section { margin-bottom: 1.5rem; }
-  .arch-section h2 {
-    font-size: 1.1rem; color: var(--eth-purple); margin-bottom: 0.8rem;
-    border-bottom: 2px solid var(--eth-purple); padding-bottom: 0.3rem;
-  }
-  .arch-grid {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem; margin-bottom: 1rem;
-  }
-  .arch-col { display: flex; flex-direction: column; gap: 0.5rem; }
-  .arch-col-title {
-    font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.05em; text-align: center; padding: 0.3rem;
-    border-radius: 4px;
-  }
-  .node {
-    padding: 0.6rem 0.8rem; border-radius: 6px; border: 1.5px solid;
-    font-size: 0.78rem; text-align: center; transition: all 0.3s;
-    position: relative;
-  }
-  .node.active { transform: scale(1.03); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-  .node .label { font-weight: 600; }
-  .node .detail { font-size: 0.68rem; opacity: 0.8; margin-top: 2px; }
-  .node.party { background: var(--party-bg); border-color: var(--party-border); color: var(--party-text); }
-  .node.zk { background: var(--zk-bg); border-color: var(--zk-border); color: var(--zk-text); }
-  .node.dp { background: var(--dp-bg); border-color: var(--dp-border); color: var(--dp-text); }
-  .node.coord { background: var(--coord-bg); border-color: var(--coord-border); color: var(--coord-text); }
-  .node.chain { background: var(--chain-bg); border-color: var(--chain-border); color: var(--chain-text); }
-  .node.ml { background: var(--ml-bg); border-color: var(--ml-border); color: var(--ml-text); }
-
   /* Metrics */
-  .metrics-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 0.8rem; margin-bottom: 1.5rem;
-  }
-  .metric-card {
-    background: white; border-radius: 8px; padding: 0.8rem 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08); text-align: center;
-  }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-bottom: 1.5rem; }
+  .metric-card { background: white; border-radius: 8px; padding: 0.8rem 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); text-align: center; }
   .metric-card .metric-label { font-size: 0.7rem; color: var(--eth-gray); text-transform: uppercase; letter-spacing: 0.04em; }
   .metric-card .metric-value { font-size: 1.4rem; font-weight: 700; color: var(--eth-purple); margin: 0.2rem 0; }
   .metric-card .metric-sub { font-size: 0.7rem; color: #888; }
 
   /* Budget bar */
-  .budget-bar-container {
-    background: white; border-radius: 8px; padding: 1rem 1.2rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 1.5rem;
-  }
+  .budget-bar-container { background: white; border-radius: 8px; padding: 1rem 1.2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
   .budget-bar-container h3 { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--eth-gray); }
-  .budget-bar {
-    height: 24px; background: #e8e8e8; border-radius: 12px; overflow: hidden;
-    position: relative;
-  }
-  .budget-fill {
-    height: 100%; border-radius: 12px; transition: width 0.5s ease;
-    background: linear-gradient(90deg, #4CAF50, #FFC107, #F44336);
-  }
-  .budget-text {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: 0.72rem; font-weight: 600; color: #333;
-  }
+  .budget-bar { height: 24px; background: #e8e8e8; border-radius: 12px; overflow: hidden; position: relative; }
+  .budget-fill { height: 100%; border-radius: 12px; transition: width 0.5s ease; background: linear-gradient(90deg, #4CAF50, #FFC107, #F44336); }
+  .budget-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 0.72rem; font-weight: 600; color: #333; }
 
   /* Log */
   .log-section { margin-bottom: 1.5rem; }
-  .log-section h2 {
-    font-size: 1.1rem; color: var(--eth-purple); margin-bottom: 0.8rem;
-    border-bottom: 2px solid var(--eth-purple); padding-bottom: 0.3rem;
-  }
-  .log-table {
-    width: 100%; border-collapse: collapse; background: white;
-    border-radius: 8px; overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  }
-  .log-table th {
-    background: var(--eth-light); color: var(--eth-gray);
-    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em;
-    padding: 0.6rem 0.8rem; text-align: left;
-  }
-  .log-table td {
-    padding: 0.5rem 0.8rem; font-size: 0.78rem; border-top: 1px solid #eee;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-  }
+  .log-section h2 { font-size: 1.1rem; color: var(--eth-purple); margin-bottom: 0.8rem; border-bottom: 2px solid var(--eth-purple); padding-bottom: 0.3rem; }
+  .log-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .log-table th { background: var(--eth-light); color: var(--eth-gray); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em; padding: 0.6rem 0.8rem; text-align: left; }
+  .log-table td { padding: 0.5rem 0.8rem; font-size: 0.78rem; border-top: 1px solid #eee; font-family: 'SF Mono', 'Fira Code', monospace; }
   .log-table tr.new { animation: flashRow 0.8s ease; }
-  @keyframes flashRow {
-    0% { background: #e8f5e9; } 100% { background: white; }
-  }
-  .status-badge {
-    display: inline-block; padding: 0.15rem 0.5rem; border-radius: 10px;
-    font-size: 0.68rem; font-weight: 600;
-  }
+  @keyframes flashRow { 0% { background: #e8f5e9; } 100% { background: white; } }
+  .status-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 10px; font-size: 0.68rem; font-weight: 600; }
   .status-badge.verified { background: #e8f5e9; color: #2e7d32; }
   .status-badge.rejected { background: #ffebee; color: #c62828; }
   .status-badge.halted { background: #fff3e0; color: #e65100; }
 
   /* Charts */
   .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-  .chart-card {
-    background: white; border-radius: 8px; padding: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  }
+  .chart-card { background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   .chart-card h3 { font-size: 0.85rem; color: var(--eth-gray); margin-bottom: 0.5rem; }
   canvas { width: 100% !important; height: 200px !important; }
 
-  .footer {
-    text-align: center; padding: 1.5rem; color: #999; font-size: 0.75rem;
-  }
+  .footer { text-align: center; padding: 1.5rem; color: #999; font-size: 0.75rem; }
 
   @media (max-width: 768px) {
-    .arch-grid { grid-template-columns: 1fr; }
     .metrics-grid { grid-template-columns: repeat(2, 1fr); }
     .charts-grid { grid-template-columns: 1fr; }
   }
@@ -168,172 +110,289 @@
 <body>
 
 <div class="header">
-  <h1>Verified Federated Learning with DP-SGD & zkVM Proofs</h1>
+  <h1>Verified Federated Learning with DP-SGD &amp; zkVM Proofs</h1>
   <p>Interactive prototype demonstrating privacy-preserving multi-institutional AI training
      for urban building maintenance in Hong Kong, with on-chain privacy budget enforcement.</p>
 </div>
 
 <div class="container">
-  <!-- Controls -->
-  <div class="controls">
-    <div>
-      <label>Epsilon/round</label><br>
-      <input type="range" id="epsilon" min="0.1" max="2.0" step="0.1" value="0.5">
-      <span class="value" id="epsilonVal">0.5</span>
+
+  <!-- ===== RESEARCH FRAMEWORK ===== -->
+  <div class="framework-section">
+    <h2>Research Framework</h2>
+    <p>End-to-end system architecture for verified vertical federated learning with differential privacy guarantees and on-chain auditability (Ethereum L2).</p>
+    <div class="framework-svg-wrap">
+      <svg viewBox="0 0 960 492" xmlns="http://www.w3.org/2000/svg"
+           style="width:100%;font-family:'Segoe UI',system-ui,sans-serif">
+        <defs>
+          <marker id="a"   markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#555"/></marker>
+          <marker id="ab"  markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#534AB7"/></marker>
+          <marker id="ar"  markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#993C1D"/></marker>
+          <marker id="abr" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#854F0B"/></marker>
+          <marker id="ag"  markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#3B6D11"/></marker>
+          <marker id="aml" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#185FA5"/></marker>
+        </defs>
+
+        <!-- ===== ZONE LABELS (above dashed borders, matching TikZ label=above) ===== -->
+        <text x="103" y="18" text-anchor="middle" font-size="10" font-weight="700" fill="#555">Participant Layer</text>
+        <text x="103" y="30" text-anchor="middle" font-size="9" fill="#777">(Vertical Split)</text>
+        <text x="336" y="18" text-anchor="middle" font-size="10" font-weight="700" fill="#534AB7">Proof Layer</text>
+        <text x="640" y="18" text-anchor="middle" font-size="10" font-weight="700" fill="#3B6D11">On-Chain Layer (Ethereum L2)</text>
+
+        <!-- ===== ZONE BORDERS (dashed, starting y=38) ===== -->
+        <!-- Participant zone: fits p1(y=44)..p4(y=314), +6px padding = y=38..326 -->
+        <rect x="8"   y="38" width="190" height="290" rx="8" fill="none" stroke="#999" stroke-dasharray="5,3" stroke-width="1.1"/>
+        <!-- Proof zone: fits zkVM(y=44)..Coordinator(y=408), +6px padding = y=38..420 -->
+        <rect x="214" y="38" width="244" height="384" rx="8" fill="none" stroke="#8888cc" stroke-dasharray="5,3" stroke-width="1.1"/>
+        <!-- On-chain zone: fits Verifier(y=44)..AuditLog(y=318), +6px padding = y=38..330 -->
+        <rect x="528" y="38" width="222" height="294" rx="8" fill="none" stroke="#999" stroke-dasharray="5,3" stroke-width="1.1"/>
+
+        <!-- ===== PARTICIPANT BOXES (all width=176, height=54, spaced 18px apart) ===== -->
+        <!-- p1: y=44-98, center y=71 -->
+        <rect x="14" y="44" width="176" height="54" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/>
+        <text x="102" y="67" text-anchor="middle" font-size="11.5" font-weight="700" fill="#085041">Buildings Dept</text>
+        <text x="102" y="83" text-anchor="middle" font-size="9.5" fill="#085041">Features A, f&#x2081;(&#xB7;)</text>
+
+        <!-- p2: y=116-170, center y=143 -->
+        <rect x="14" y="116" width="176" height="54" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/>
+        <text x="102" y="139" text-anchor="middle" font-size="11.5" font-weight="700" fill="#085041">Property Mgr</text>
+        <text x="102" y="155" text-anchor="middle" font-size="9.5" fill="#085041">Features B, f&#x2082;(&#xB7;)</text>
+
+        <!-- p3: y=188-242, center y=215 -->
+        <rect x="14" y="188" width="176" height="54" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/>
+        <text x="102" y="211" text-anchor="middle" font-size="11.5" font-weight="700" fill="#085041">Inspection Body</text>
+        <text x="102" y="227" text-anchor="middle" font-size="9.5" fill="#085041">Features C, f&#x2083;(&#xB7;)</text>
+
+        <!-- p4: y=260-314, center y=287, east=(190,287), south=(102,314) -->
+        <rect x="14" y="260" width="176" height="54" rx="5" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/>
+        <text x="102" y="283" text-anchor="middle" font-size="11.5" font-weight="700" fill="#085041">Owners&#x2019; Corp</text>
+        <text x="102" y="299" text-anchor="middle" font-size="9.5" fill="#085041">Features D, f&#x2084;(&#xB7;)</text>
+
+        <!-- ===== PROOF LAYER BOXES ===== -->
+        <!-- zkVM: y=44-128, center y=86; west=(222,86); entry y=68,80,92,104 -->
+        <rect x="222" y="44" width="228" height="84" rx="5" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.8"/>
+        <text x="336" y="69" text-anchor="middle" font-size="13" font-weight="700" fill="#3C3489">zkVM</text>
+        <text x="336" y="86" text-anchor="middle" font-size="10.5" fill="#534AB7">SP1 / RISC Zero</text>
+        <text x="336" y="102" text-anchor="middle" font-size="9.5" fill="#534AB7">Per-party proving</text>
+
+        <!-- DP-SGD: y=158-226, center y=192; east=(450,192), south=(336,226) -->
+        <rect x="222" y="158" width="228" height="68" rx="5" fill="#FAECE7" stroke="#993C1D" stroke-width="1.4"/>
+        <text x="336" y="183" text-anchor="middle" font-size="13" font-weight="700" fill="#712B13">DP-SGD</text>
+        <text x="336" y="200" text-anchor="middle" font-size="10.5" fill="#712B13">Clip + Noise + R&#xe9;nyi</text>
+
+        <!-- IVC Aggregation (dashed): y=254-316, center y=285; east=(450,285), south=(336,316) -->
+        <rect x="222" y="254" width="228" height="62" rx="5" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.4" stroke-dasharray="5,3"/>
+        <text x="336" y="280" text-anchor="middle" font-size="12" font-weight="700" fill="#3C3489">IVC Aggregation</text>
+        <text x="336" y="298" text-anchor="middle" font-size="10" fill="#3C3489">&#x3C0;&#x2081;&#x2225;&#x22EF;&#x2225;&#x3C0;_K &#x2192; &#x3C0;_agg</text>
+
+        <!-- Coordinator: y=346-418, center y=382; west=(222,382), east=(450,382) -->
+        <rect x="222" y="346" width="228" height="72" rx="5" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.4"/>
+        <text x="336" y="371" text-anchor="middle" font-size="13" font-weight="700" fill="#633806">Coordinator</text>
+        <text x="336" y="388" text-anchor="middle" font-size="10.5" fill="#633806">Top model g(e&#x2081;&#x2225;&#x22EF;&#x2225;e_K)</text>
+        <text x="336" y="405" text-anchor="middle" font-size="9.5" fill="#854F0B">Loss backprop to f_k</text>
+
+        <!-- ===== ON-CHAIN BOXES (all width=208, height=56, spaced 16px) ===== -->
+        <!-- Verifier: y=44-100, center y=72; west=(536,72), south=(640,100) -->
+        <rect x="536" y="44" width="208" height="56" rx="5" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.4"/>
+        <text x="640" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#27500A">Verifier Contract</text>
+        <text x="640" y="85" text-anchor="middle" font-size="9.5" fill="#27500A">zkVM proof verified</text>
+
+        <!-- State Root: y=116-172, center y=144; west=(536,144) -->
+        <rect x="536" y="116" width="208" height="56" rx="5" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.4"/>
+        <text x="640" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#27500A">State Root</text>
+        <text x="640" y="157" text-anchor="middle" font-size="9.5" fill="#27500A">Model hash (Merkle)</text>
+
+        <!-- Privacy Budget: y=188-244, center y=216; west=(536,216) -->
+        <rect x="536" y="188" width="208" height="56" rx="5" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.4"/>
+        <text x="640" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#27500A">Privacy Budget</text>
+        <text x="640" y="229" text-anchor="middle" font-size="9.5" fill="#27500A">&#x3B5;_total tracker</text>
+
+        <!-- Audit Log: y=260-316, center y=288; west=(536,288), south=(640,316) -->
+        <rect x="536" y="260" width="208" height="56" rx="5" fill="#EAF3DE" stroke="#3B6D11" stroke-width="1.4"/>
+        <text x="640" y="284" text-anchor="middle" font-size="12" font-weight="700" fill="#27500A">Audit Log</text>
+        <text x="640" y="301" text-anchor="middle" font-size="9.5" fill="#27500A">Per-round record</text>
+
+        <!-- ===== MODEL OUTPUT zone + boxes (label=below) ===== -->
+        <rect x="528" y="346" width="424" height="114" rx="8" fill="none" stroke="#185FA5" stroke-dasharray="5,3" stroke-width="1.1"/>
+        <!-- Demand Predictor: y=354-438, north y=354, center (627,396) -->
+        <rect x="536" y="354" width="194" height="84" rx="5" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.4"/>
+        <text x="633" y="381" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">Demand Predictor</text>
+        <text x="633" y="398" text-anchor="middle" font-size="9.5" fill="#0C447C">Maintenance urgency</text>
+        <text x="633" y="414" text-anchor="middle" font-size="9.5" fill="#0C447C">5/10/15/20-yr horizon</text>
+        <!-- Cost Estimator: y=354-438, north y=354, center (837,396) -->
+        <rect x="742" y="354" width="194" height="84" rx="5" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.4"/>
+        <text x="839" y="381" text-anchor="middle" font-size="12" font-weight="700" fill="#0C447C">Cost Estimator</text>
+        <text x="839" y="398" text-anchor="middle" font-size="9.5" fill="#0C447C">Repair cost range</text>
+        <text x="839" y="414" text-anchor="middle" font-size="9.5" fill="#0C447C">Per specification</text>
+        <!-- Model Output label below zone -->
+        <text x="740" y="480" text-anchor="middle" font-size="9.5" font-weight="600" fill="#185FA5">Model Output (MBIS Workflow)</text>
+
+        <!-- ===== ARROWS ===== -->
+
+        <!-- e1-e4: pN.east → corridor waypoint → |- → zkVM.west at 4 entry heights
+             Corridor x=190..222 (32px). Entry heights at y=68,80,92,104 inside zkVM(y=44-128). -->
+        <path d="M190,71 L197,71 L197,68 L222,68" stroke="#555" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+        <text x="194" y="65" font-size="8.5" fill="#555" font-style="italic">e&#x2081;</text>
+
+        <path d="M190,143 L200,143 L200,80 L222,80" stroke="#555" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+        <text x="193" y="138" font-size="8.5" fill="#555" font-style="italic">e&#x2082;</text>
+
+        <path d="M190,215 L204,215 L204,92 L222,92" stroke="#555" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+        <text x="193" y="210" font-size="8.5" fill="#555" font-style="italic">e&#x2083;</text>
+
+        <path d="M190,287 L208,287 L208,104 L222,104" stroke="#555" stroke-width="1.3" fill="none" marker-end="url(#a)"/>
+        <text x="193" y="282" font-size="8.5" fill="#555" font-style="italic">e&#x2084;</text>
+
+        <!-- zkVM.south → DP-SGD.north: (336,128)→(336,158), label right of arrow -->
+        <path d="M336,128 L336,158" stroke="#555" stroke-width="1.4" fill="none" marker-end="url(#a)"/>
+        <text x="340" y="147" font-size="7.5" fill="#534AB7" font-style="italic">&#x3C0;_clip, &#x3C0;_noise, &#x3C0;_update</text>
+
+        <!-- DP-SGD.south → IVC.north: (336,226)→(336,254) -->
+        <path d="M336,226 L336,254" stroke="#555" stroke-width="1.4" fill="none" marker-end="url(#a)"/>
+        <text x="340" y="244" font-size="8.5" fill="#993C1D" font-style="italic">per-party &#x3C0;_k</text>
+
+        <!-- IVC.south → Coordinator.north: (336,316)→(336,346) -->
+        <path d="M336,316 L336,346" stroke="#555" stroke-width="1.4" fill="none" marker-end="url(#a)"/>
+        <text x="340" y="335" font-size="8.5" fill="#534AB7" font-style="italic">&#x3C0;_agg + gradients</text>
+
+        <!-- ∇̃L (dashed brown): coord.west(222,382) → left 27px → |- → p4.east+(0,+7px)=(190,280)
+             TikZ: (coord.west)--++(-0.6,0) |- ($(p4.east)+(0,0.15)$) -->
+        <path d="M222,382 L195,382 L195,280 L190,280" stroke="#854F0B" stroke-width="1.3" fill="none" stroke-dasharray="5,3" marker-end="url(#abr)"/>
+        <text x="209" y="395" font-size="8" fill="#854F0B" font-style="italic">&#x2207;&#x0303;L to f_k</text>
+
+        <!-- ===== PROOF→ON-CHAIN: corridor x=450..536 (86px ≈ 1.9cm) ===== -->
+
+        <!-- π_agg (thick blue): IVC.east(450,285) → +58px(1.3cm) → |- → Verifier.west(536,72)
+             vertical at x=508, then right to x=536 -->
+        <path d="M450,285 L508,285 L508,72 L536,72" stroke="#534AB7" stroke-width="2" fill="none" marker-end="url(#ab)"/>
+        <text x="512" y="180" font-size="8.5" fill="#534AB7" font-style="italic" transform="rotate(-90,512,180)">&#x3C0;_agg</text>
+
+        <!-- model hash (brown): Coordinator.east(450,382) → +45px(1.0cm) → |- → StateRoot.west(536,144)
+             vertical at x=495, then right to x=536 -->
+        <path d="M450,382 L495,382 L495,144 L536,144" stroke="#854F0B" stroke-width="1.4" fill="none" marker-end="url(#abr)"/>
+        <text x="499" y="263" font-size="8.5" fill="#854F0B" font-style="italic" transform="rotate(-90,499,263)">model hash</text>
+
+        <!-- ε_round (red): DP-SGD.east(450,192) → +86px(full corridor) → |- → PrivacyBudget.west(536,216)
+             goes right to x=536, then straight down to y=216 -->
+        <path d="M450,192 L536,192 L536,216" stroke="#993C1D" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+        <text x="453" y="187" font-size="8.5" fill="#993C1D" font-style="italic">&#x3B5;_round</text>
+
+        <!-- ===== ON-CHAIN internal chain ===== -->
+        <path d="M640,100 L640,116" stroke="#3B6D11" stroke-width="1.4" fill="none" marker-end="url(#ag)"/>
+        <path d="M640,172 L640,188" stroke="#3B6D11" stroke-width="1.4" fill="none" marker-end="url(#ag)"/>
+        <path d="M640,244 L640,260" stroke="#3B6D11" stroke-width="1.4" fill="none" marker-end="url(#ag)"/>
+
+        <!-- ===== DEPLOY: auditlog.south(640,316) → +18px down → -| → model north ===== -->
+        <!-- TikZ: (auditlog.south)--++(0,-0.4) -| (modelN.north) -->
+        <path d="M640,316 L640,334 L633,334 L633,354" stroke="#185FA5" stroke-width="1.3" fill="none" marker-end="url(#aml)"/>
+        <text x="644" y="329" font-size="8.5" fill="#185FA5">deploy</text>
+        <path d="M640,316 L640,334 L839,334 L839,354" stroke="#185FA5" stroke-width="1.3" fill="none" marker-end="url(#aml)"/>
+
+        <!-- ===== ROUNDCOMPLETED: auditlog.west(536,288) → left 23px → |- → below p4.south ===== -->
+        <!-- TikZ: (auditlog.west)--++(-0.5,0) |- ($(p4.south)+(0,-0.3)$) -- (p4.south)
+             p4.south=(102,314). p4.south+13=(102,327).
+             Vertical segment at x=513 from y=288 down to y=327.
+             Horizontal at y=327 from x=513 to x=102. Then up to (102,314).
+             y=327 passes between IVC.bottom(316) and Coordinator.top(346) ✓ -->
+        <path d="M536,288 L513,288 L513,327 L102,327 L102,314" stroke="#3B6D11" stroke-width="1.3" fill="none" stroke-dasharray="4,2" marker-end="url(#ag)"/>
+        <text x="308" y="322" text-anchor="middle" font-size="8.5" fill="#3B6D11" font-family="monospace">RoundCompleted</text>
+
+      </svg>
     </div>
-    <div>
-      <label>Budget ceiling</label><br>
-      <input type="range" id="budget" min="1" max="10" step="0.5" value="3.0">
-      <span class="value" id="budgetVal">3.0</span>
-    </div>
-    <div>
-      <label>Clip bound C</label><br>
-      <input type="range" id="clip" min="0.1" max="3.0" step="0.1" value="1.0">
-      <span class="value" id="clipVal">1.0</span>
-    </div>
-    <div>
-      <label>Participants</label><br>
-      <input type="range" id="parties" min="2" max="6" step="1" value="4">
-      <span class="value" id="partiesVal">4</span>
-    </div>
-    <button class="btn" id="runBtn" onclick="runSimulation()">Run Training</button>
-    <button class="btn" id="stepBtn" onclick="stepRound()">Step Round</button>
-    <button class="btn reset" onclick="resetSimulation()">Reset</button>
   </div>
 
-  <!-- Metrics -->
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-label">Current Round</div>
-      <div class="metric-value" id="metricRound">0</div>
-      <div class="metric-sub">of max training rounds</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Training Loss</div>
-      <div class="metric-value" id="metricLoss">--</div>
-      <div class="metric-sub">MSE on batch</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Epsilon Consumed</div>
-      <div class="metric-value" id="metricEps">0.000</div>
-      <div class="metric-sub" id="metricEpsSub">of 3.0 budget</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Proofs Verified</div>
-      <div class="metric-value" id="metricProofs">0</div>
-      <div class="metric-sub">zkVM + IVC on-chain</div>
-    </div>
-  </div>
+  <!-- ===== TRAINING SIMULATION & RESULTS ===== -->
+  <div class="training-section">
+    <h2>Training Simulation &amp; Results</h2>
 
-  <!-- Budget Bar -->
-  <div class="budget-bar-container">
-    <h3>Privacy Budget Consumption (On-Chain Enforced)</h3>
-    <div class="budget-bar">
-      <div class="budget-fill" id="budgetFill" style="width:0%"></div>
-      <div class="budget-text" id="budgetText">0.000 / 3.000</div>
-    </div>
-  </div>
-
-  <!-- Architecture -->
-  <div class="arch-section">
-    <h2>System Architecture (Live)</h2>
-    <div class="arch-grid">
-      <div class="arch-col">
-        <div class="arch-col-title" style="background:var(--party-bg);color:var(--party-text);">
-          Participant Layer (Vertical Split)
-        </div>
-        <div class="node party" id="node-bd">
-          <div class="label">Buildings Dept</div>
-          <div class="detail">Features A: age, type, district</div>
-        </div>
-        <div class="node party" id="node-pm">
-          <div class="label">Property Manager</div>
-          <div class="detail">Features B: repairs, access, contractor</div>
-        </div>
-        <div class="node party" id="node-ib">
-          <div class="label">Inspection Body</div>
-          <div class="detail">Features C: scores, defects, compliance</div>
-        </div>
-        <div class="node party" id="node-oc">
-          <div class="label">Owners' Corporation</div>
-          <div class="detail">Features D: finances, votes, insurance</div>
-        </div>
+    <!-- Controls -->
+    <div class="controls">
+      <div>
+        <label>Epsilon/round</label><br>
+        <input type="range" id="epsilon" min="0.1" max="2.0" step="0.1" value="0.5">
+        <span class="value" id="epsilonVal">0.5</span>
       </div>
-      <div class="arch-col">
-        <div class="arch-col-title" style="background:var(--zk-bg);color:var(--zk-text);">
-          Proof Layer
-        </div>
-        <div class="node zk" id="node-zkvm">
-          <div class="label">zkVM Prover</div>
-          <div class="detail">SP1 / RISC Zero (mocked)</div>
-        </div>
-        <div class="node dp" id="node-dp">
-          <div class="label">DP-SGD Engine</div>
-          <div class="detail">Clip + Noise + Renyi Accounting</div>
-        </div>
-        <div class="node zk" id="node-ivc" style="border-style:dashed;">
-          <div class="label">IVC Aggregation</div>
-          <div class="detail">pi_1 || ... || pi_K -> pi_agg</div>
-        </div>
-        <div class="node coord" id="node-coord">
-          <div class="label">Coordinator</div>
-          <div class="detail">Top model g(e1||...||eK)</div>
-        </div>
+      <div>
+        <label>Budget ceiling</label><br>
+        <input type="range" id="budget" min="1" max="10" step="0.5" value="3.0">
+        <span class="value" id="budgetVal">3.0</span>
       </div>
-      <div class="arch-col">
-        <div class="arch-col-title" style="background:var(--chain-bg);color:var(--chain-text);">
-          On-Chain Layer (Ethereum L2)
-        </div>
-        <div class="node chain" id="node-verify">
-          <div class="label">Verifier Contract</div>
-          <div class="detail">zkVM proof check</div>
-        </div>
-        <div class="node chain" id="node-state">
-          <div class="label">State Root</div>
-          <div class="detail">Model hash (Merkle)</div>
-        </div>
-        <div class="node chain" id="node-budget">
-          <div class="label">Privacy Budget</div>
-          <div class="detail">eps_total tracker</div>
-        </div>
-        <div class="node chain" id="node-audit">
-          <div class="label">Audit Log</div>
-          <div class="detail">Per-round record</div>
-        </div>
+      <div>
+        <label>Clip bound C</label><br>
+        <input type="range" id="clip" min="0.1" max="3.0" step="0.1" value="1.0">
+        <span class="value" id="clipVal">1.0</span>
       </div>
+      <div>
+        <label>Participants</label><br>
+        <input type="range" id="parties" min="2" max="6" step="1" value="4">
+        <span class="value" id="partiesVal">4</span>
+      </div>
+      <button class="btn" id="runBtn" onclick="runSimulation()">Run Training</button>
+      <button class="btn" id="stepBtn" onclick="stepRound()">Step Round</button>
+      <button class="btn reset" onclick="resetSimulation()">Reset</button>
+    </div>
+
+    <!-- Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Current Round</div>
+        <div class="metric-value" id="metricRound">0</div>
+        <div class="metric-sub">of max training rounds</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Training Loss</div>
+        <div class="metric-value" id="metricLoss">--</div>
+        <div class="metric-sub">MSE on batch</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Epsilon Consumed</div>
+        <div class="metric-value" id="metricEps">0.000</div>
+        <div class="metric-sub" id="metricEpsSub">of 3.0 budget</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Proofs Verified</div>
+        <div class="metric-value" id="metricProofs">0</div>
+        <div class="metric-sub">zkVM + IVC on-chain</div>
+      </div>
+    </div>
+
+    <!-- Budget Bar -->
+    <div class="budget-bar-container">
+      <h3>Privacy Budget Consumption (On-Chain Enforced)</h3>
+      <div class="budget-bar">
+        <div class="budget-fill" id="budgetFill" style="width:0%"></div>
+        <div class="budget-text" id="budgetText">0.000 / 3.000</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Training Loss Over Rounds</h3>
+        <canvas id="lossChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Cumulative Privacy Budget</h3>
+        <canvas id="budgetChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Audit Log -->
+    <div class="log-section">
+      <h2>On-Chain Audit Log</h2>
+      <table class="log-table">
+        <thead>
+          <tr>
+            <th>Round</th><th>eps_round</th><th>eps_total</th>
+            <th>Merkle Root</th><th>Proofs</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="logBody"></tbody>
+      </table>
     </div>
   </div>
 
-  <!-- Charts -->
-  <div class="charts-grid">
-    <div class="chart-card">
-      <h3>Training Loss Over Rounds</h3>
-      <canvas id="lossChart"></canvas>
-    </div>
-    <div class="chart-card">
-      <h3>Cumulative Privacy Budget</h3>
-      <canvas id="budgetChart"></canvas>
-    </div>
-  </div>
-
-  <!-- Audit Log Table -->
-  <div class="log-section">
-    <h2>On-Chain Audit Log</h2>
-    <table class="log-table">
-      <thead>
-        <tr>
-          <th>Round</th>
-          <th>eps_round</th>
-          <th>eps_total</th>
-          <th>Merkle Root</th>
-          <th>Proofs</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="logBody"></tbody>
-    </table>
-  </div>
-</div>
+</div><!-- /container -->
 
 <div class="footer">
   Verified Federated Learning Demo &mdash; Ethereum Foundation PhD Fellowship 2026<br>
@@ -341,180 +400,128 @@
 </div>
 
 <script>
-// Minimal simulation engine (mirrors the Rust pipeline logic)
 const state = {
-  round: 0,
-  epsilon_consumed: 0,
-  training_halted: false,
-  losses: [],
-  epsilons: [],
-  proofs_total: 0,
-  weights: null,
-  model_root: '0x0000000000000000',
-  running: false,
+  round: 0, epsilon_consumed: 0, training_halted: false,
+  losses: [], epsilons: [], proofs_total: 0,
+  weights: null, model_root: '0x0000000000000000', running: false,
 };
 
 function getConfig() {
   return {
     epsilon: parseFloat(document.getElementById('epsilon').value),
-    budget: parseFloat(document.getElementById('budget').value),
-    clip: parseFloat(document.getElementById('clip').value),
+    budget:  parseFloat(document.getElementById('budget').value),
+    clip:    parseFloat(document.getElementById('clip').value),
     parties: parseInt(document.getElementById('parties').value),
   };
 }
 
-// Update displayed values
 ['epsilon','budget','clip','parties'].forEach(id => {
   const el = document.getElementById(id);
   el.addEventListener('input', () => {
     document.getElementById(id+'Val').textContent = el.value;
-    if (id === 'budget') {
-      document.getElementById('metricEpsSub').textContent = `of ${el.value} budget`;
-    }
+    if (id === 'budget') document.getElementById('metricEpsSub').textContent = `of ${el.value} budget`;
   });
 });
 
-// SHA-256 mock (simple hash for demo)
 function mockHash(input) {
   let h = 0x811c9dc5;
-  for (let i = 0; i < input.length; i++) {
-    h ^= input.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return '0x' + (h >>> 0).toString(16).padStart(8,'0') +
-         ((h * 31) >>> 0).toString(16).padStart(8,'0');
+  for (let i = 0; i < input.length; i++) { h ^= input.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+  return '0x' + (h >>> 0).toString(16).padStart(8,'0') + ((h * 31) >>> 0).toString(16).padStart(8,'0');
 }
 
-// Simulate one training round
 function simulateRound() {
   const cfg = getConfig();
   if (state.training_halted) return null;
-
   state.round++;
   const noise_sigma = cfg.clip * Math.sqrt(2 * Math.log(1.25 / 1e-5)) / cfg.epsilon;
-
-  // Simulate forward + backward + loss
-  // Loss decays with noise-adjusted convergence
-  const base_loss = 0.5 * Math.exp(-0.15 * state.round) + 0.02;
+  const base_loss   = 0.5 * Math.exp(-0.15 * state.round) + 0.02;
   const noise_penalty = 0.03 * noise_sigma / (1 + state.round * 0.1);
   const loss = base_loss + noise_penalty + (Math.random() - 0.5) * 0.01;
 
-  // Generate per-participant proofs
   const proofs = [];
   for (let p = 0; p < cfg.parties; p++) {
-    proofs.push({
-      id: ['buildings_dept','property_mgr','inspection_body','owners_corp','contractor','ura'][p],
-      hash: mockHash(`proof_r${state.round}_p${p}_e${cfg.epsilon}`),
-      valid: true,
-    });
+    proofs.push({ id: ['buildings_dept','property_mgr','inspection_body','owners_corp','contractor','ura'][p],
+                  hash: mockHash(`proof_r${state.round}_p${p}_e${cfg.epsilon}`), valid: true });
   }
   state.proofs_total += cfg.parties;
-
-  // IVC aggregation
   const agg_hash = mockHash(proofs.map(p => p.hash).join('||'));
 
-  // On-chain: consume budget
   const new_eps = state.epsilon_consumed + cfg.epsilon;
   if (new_eps > cfg.budget) {
     state.training_halted = true;
-    return {
-      round: state.round,
-      loss, epsilon_round: cfg.epsilon,
-      epsilon_total: state.epsilon_consumed,
-      merkle_root: state.model_root,
-      proofs: cfg.parties,
-      status: 'halted',
-      agg_hash,
-    };
+    return { round: state.round, loss, epsilon_round: cfg.epsilon,
+             epsilon_total: state.epsilon_consumed, merkle_root: state.model_root,
+             proofs: cfg.parties, status: 'halted', agg_hash };
   }
-
   state.epsilon_consumed = new_eps;
   state.model_root = mockHash(state.model_root + `_r${state.round}`);
-
   state.losses.push(loss);
   state.epsilons.push(new_eps);
-
-  return {
-    round: state.round,
-    loss,
-    epsilon_round: cfg.epsilon,
-    epsilon_total: new_eps,
-    merkle_root: state.model_root,
-    proofs: cfg.parties,
-    status: 'verified',
-    agg_hash,
-  };
+  return { round: state.round, loss, epsilon_round: cfg.epsilon,
+           epsilon_total: new_eps, merkle_root: state.model_root,
+           proofs: cfg.parties, status: 'verified', agg_hash };
 }
 
-// Update UI
 function updateUI(result) {
   if (!result) return;
   const cfg = getConfig();
-
-  document.getElementById('metricRound').textContent = state.round;
-  document.getElementById('metricLoss').textContent = result.loss.toFixed(4);
-  document.getElementById('metricEps').textContent = state.epsilon_consumed.toFixed(3);
+  document.getElementById('metricRound').textContent  = state.round;
+  document.getElementById('metricLoss').textContent   = result.loss.toFixed(4);
+  document.getElementById('metricEps').textContent    = state.epsilon_consumed.toFixed(3);
   document.getElementById('metricProofs').textContent = state.proofs_total;
 
-  // Budget bar
   const pct = Math.min((state.epsilon_consumed / cfg.budget) * 100, 100);
   document.getElementById('budgetFill').style.width = pct + '%';
-  document.getElementById('budgetText').textContent =
-    `${state.epsilon_consumed.toFixed(3)} / ${cfg.budget.toFixed(3)}`;
+  document.getElementById('budgetText').textContent  = `${state.epsilon_consumed.toFixed(3)} / ${cfg.budget.toFixed(3)}`;
 
-  // Audit log row
   const tbody = document.getElementById('logBody');
   const tr = document.createElement('tr');
   tr.className = 'new';
-  const statusClass = result.status === 'verified' ? 'verified' :
-                      result.status === 'halted' ? 'halted' : 'rejected';
+  const sc = result.status === 'verified' ? 'verified' : result.status === 'halted' ? 'halted' : 'rejected';
   tr.innerHTML = `
     <td>${result.round}</td>
     <td>${result.epsilon_round.toFixed(4)}</td>
     <td>${result.epsilon_total.toFixed(4)}</td>
     <td>${result.merkle_root.slice(0,18)}...</td>
     <td>${result.proofs} zkVM + 1 IVC</td>
-    <td><span class="status-badge ${statusClass}">${result.status}</span></td>
-  `;
+    <td><span class="status-badge ${sc}">${result.status}</span></td>`;
   tbody.insertBefore(tr, tbody.firstChild);
-
-  // Animate architecture nodes
-  animateNodes(result);
-
-  // Update charts
   drawCharts();
 }
 
-function animateNodes(result) {
-  const sequence = [
-    ['node-bd','node-pm','node-ib','node-oc'],
-    ['node-dp'],
-    ['node-zkvm'],
-    ['node-ivc'],
-    ['node-coord'],
-    ['node-verify'],
-    ['node-state','node-budget'],
-    ['node-audit'],
-  ];
-  sequence.forEach((ids, i) => {
-    setTimeout(() => {
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) { el.classList.add('active'); }
-      });
-    }, i * 150);
-    setTimeout(() => {
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) { el.classList.remove('active'); }
-      });
-    }, i * 150 + 400);
-  });
+async function runSimulation() {
+  if (state.running) return;
+  state.running = true;
+  document.getElementById('runBtn').disabled = true;
+  const cfg = getConfig();
+  const maxRounds = Math.ceil(cfg.budget / cfg.epsilon) + 1;
+  for (let i = 0; i < maxRounds; i++) {
+    if (state.training_halted) break;
+    updateUI(simulateRound());
+    await new Promise(r => setTimeout(r, 500));
+  }
+  state.running = false;
+  document.getElementById('runBtn').disabled = false;
 }
 
-// Simple canvas chart drawing
+function stepRound() { if (!state.training_halted) updateUI(simulateRound()); }
+
+function resetSimulation() {
+  Object.assign(state, { round:0, epsilon_consumed:0, training_halted:false, losses:[], epsilons:[], proofs_total:0, model_root:'0x0000000000000000', running:false });
+  document.getElementById('metricRound').textContent  = '0';
+  document.getElementById('metricLoss').textContent   = '--';
+  document.getElementById('metricEps').textContent    = '0.000';
+  document.getElementById('metricProofs').textContent = '0';
+  document.getElementById('budgetFill').style.width   = '0%';
+  const cfg = getConfig();
+  document.getElementById('budgetText').textContent   = `0.000 / ${cfg.budget.toFixed(3)}`;
+  document.getElementById('logBody').innerHTML = '';
+  document.getElementById('runBtn').disabled = false;
+  drawCharts();
+}
+
 function drawCharts() {
-  drawLineChart('lossChart', state.losses, '#637FEA', 'Loss');
+  drawLineChart('lossChart',   state.losses,   '#637FEA', 'Loss');
   drawLineChart('budgetChart', state.epsilons, '#F44336', 'Epsilon');
 }
 
@@ -524,23 +531,14 @@ function drawLineChart(canvasId, data, color, label) {
   const W = canvas.width = canvas.offsetWidth * 2;
   const H = canvas.height = 400;
   ctx.clearRect(0, 0, W, H);
-
   if (data.length === 0) {
-    ctx.fillStyle = '#ccc';
-    ctx.font = '24px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('No data yet', W/2, H/2);
-    return;
+    ctx.fillStyle = '#ccc'; ctx.font = '24px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('No data yet', W/2, H/2); return;
   }
+  const pad = { t:30, r:30, b:40, l:60 };
+  const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
+  const maxY = Math.max(...data) * 1.15, minY = 0;
 
-  const pad = { t: 30, r: 30, b: 40, l: 60 };
-  const plotW = W - pad.l - pad.r;
-  const plotH = H - pad.t - pad.b;
-
-  const maxY = Math.max(...data) * 1.15;
-  const minY = 0;
-
-  // Grid
   ctx.strokeStyle = '#eee'; ctx.lineWidth = 1;
   for (let i = 0; i <= 4; i++) {
     const y = pad.t + plotH * (1 - i/4);
@@ -548,39 +546,31 @@ function drawLineChart(canvasId, data, color, label) {
     ctx.fillStyle = '#999'; ctx.font = '20px sans-serif'; ctx.textAlign = 'right';
     ctx.fillText((minY + (maxY - minY) * i/4).toFixed(3), pad.l - 8, y + 6);
   }
-
-  // X axis labels
   ctx.fillStyle = '#999'; ctx.font = '20px sans-serif'; ctx.textAlign = 'center';
   data.forEach((_, i) => {
-    const x = pad.l + (i / Math.max(data.length - 1, 1)) * plotW;
-    ctx.fillText(i + 1, x, H - 10);
+    ctx.fillText(i + 1, pad.l + (i / Math.max(data.length-1,1)) * plotW, H - 10);
   });
 
-  // Line
   ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.lineJoin = 'round';
   ctx.beginPath();
   data.forEach((v, i) => {
-    const x = pad.l + (i / Math.max(data.length - 1, 1)) * plotW;
+    const x = pad.l + (i / Math.max(data.length-1,1)) * plotW;
     const y = pad.t + plotH * (1 - (v - minY) / (maxY - minY));
-    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
   ctx.stroke();
-
-  // Points
   ctx.fillStyle = color;
   data.forEach((v, i) => {
-    const x = pad.l + (i / Math.max(data.length - 1, 1)) * plotW;
+    const x = pad.l + (i / Math.max(data.length-1,1)) * plotW;
     const y = pad.t + plotH * (1 - (v - minY) / (maxY - minY));
-    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI*2); ctx.fill();
   });
 
-  // Budget ceiling line for epsilon chart
   if (canvasId === 'budgetChart') {
     const cfg = getConfig();
     const ceilY = pad.t + plotH * (1 - (cfg.budget - minY) / (maxY - minY));
     if (ceilY >= pad.t) {
-      ctx.strokeStyle = '#F44336'; ctx.lineWidth = 2;
-      ctx.setLineDash([8, 4]);
+      ctx.strokeStyle = '#F44336'; ctx.lineWidth = 2; ctx.setLineDash([8,4]);
       ctx.beginPath(); ctx.moveTo(pad.l, ceilY); ctx.lineTo(W - pad.r, ceilY); ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = '#F44336'; ctx.font = '20px sans-serif'; ctx.textAlign = 'left';
@@ -589,57 +579,6 @@ function drawLineChart(canvasId, data, color, label) {
   }
 }
 
-// Run full simulation
-async function runSimulation() {
-  if (state.running) return;
-  state.running = true;
-  document.getElementById('runBtn').disabled = true;
-
-  const cfg = getConfig();
-  const maxRounds = Math.ceil(cfg.budget / cfg.epsilon) + 1;
-
-  for (let i = 0; i < maxRounds; i++) {
-    if (state.training_halted) break;
-    const result = simulateRound();
-    updateUI(result);
-    await new Promise(r => setTimeout(r, 500));
-  }
-
-  state.running = false;
-  document.getElementById('runBtn').disabled = false;
-}
-
-function stepRound() {
-  if (state.training_halted) return;
-  const result = simulateRound();
-  updateUI(result);
-}
-
-function resetSimulation() {
-  state.round = 0;
-  state.epsilon_consumed = 0;
-  state.training_halted = false;
-  state.losses = [];
-  state.epsilons = [];
-  state.proofs_total = 0;
-  state.model_root = '0x0000000000000000';
-  state.running = false;
-
-  document.getElementById('metricRound').textContent = '0';
-  document.getElementById('metricLoss').textContent = '--';
-  document.getElementById('metricEps').textContent = '0.000';
-  document.getElementById('metricProofs').textContent = '0';
-  document.getElementById('budgetFill').style.width = '0%';
-
-  const cfg = getConfig();
-  document.getElementById('budgetText').textContent = `0.000 / ${cfg.budget.toFixed(3)}`;
-  document.getElementById('logBody').innerHTML = '';
-  document.getElementById('runBtn').disabled = false;
-
-  drawCharts();
-}
-
-// Initialize charts
 drawCharts();
 </script>
 </body>
