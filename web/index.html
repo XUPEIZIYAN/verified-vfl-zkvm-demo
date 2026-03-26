@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verified Federated Learning Demo</title>
+<style>
+  :root {
+    --eth-purple: #637FEA;
+    --eth-purple-light: #8B9FF0;
+    --eth-gray: #4A4A4A;
+    --eth-light: #F5F5F5;
+    --eth-text: #222;
+    --party-bg: #E1F5EE; --party-border: #0F6E56; --party-text: #085041;
+    --zk-bg: #EEEDFE; --zk-border: #534AB7; --zk-text: #3C3489;
+    --chain-bg: #EAF3DE; --chain-border: #3B6D11; --chain-text: #27500A;
+    --coord-bg: #FAEEDA; --coord-border: #854F0B; --coord-text: #633806;
+    --dp-bg: #FAECE7; --dp-border: #993C1D; --dp-text: #712B13;
+    --ml-bg: #E6F1FB; --ml-border: #185FA5; --ml-text: #0C447C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #fafafa; color: var(--eth-text);
+    line-height: 1.5;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white; padding: 2rem 2rem 1.5rem; text-align: center;
+  }
+  .header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .header p { font-size: 0.85rem; opacity: 0.8; max-width: 700px; margin: 0 auto; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+
+  /* Controls */
+  .controls {
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+    background: white; padding: 1rem 1.2rem; border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem;
+  }
+  .controls label { font-size: 0.8rem; color: var(--eth-gray); font-weight: 500; }
+  .controls input[type=range] { width: 120px; accent-color: var(--eth-purple); }
+  .controls .value { font-weight: 600; color: var(--eth-purple); min-width: 3em; }
+  .btn {
+    background: var(--eth-purple); color: white; border: none;
+    padding: 0.5rem 1.2rem; border-radius: 6px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 500; transition: background 0.2s;
+  }
+  .btn:hover { background: var(--eth-purple-light); }
+  .btn:disabled { background: #999; cursor: not-allowed; }
+  .btn.reset { background: #888; }
+
+  /* Architecture diagram */
+  .arch-section { margin-bottom: 1.5rem; }
+  .arch-section h2 {
+    font-size: 1.1rem; color: var(--eth-purple); margin-bottom: 0.8rem;
+    border-bottom: 2px solid var(--eth-purple); padding-bottom: 0.3rem;
+  }
+  .arch-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem; margin-bottom: 1rem;
+  }
+  .arch-col { display: flex; flex-direction: column; gap: 0.5rem; }
+  .arch-col-title {
+    font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; text-align: center; padding: 0.3rem;
+    border-radius: 4px;
+  }
+  .node {
+    padding: 0.6rem 0.8rem; border-radius: 6px; border: 1.5px solid;
+    font-size: 0.78rem; text-align: center; transition: all 0.3s;
+    position: relative;
+  }
+  .node.active { transform: scale(1.03); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .node .label { font-weight: 600; }
+  .node .detail { font-size: 0.68rem; opacity: 0.8; margin-top: 2px; }
+  .node.party { background: var(--party-bg); border-color: var(--party-border); color: var(--party-text); }
+  .node.zk { background: var(--zk-bg); border-color: var(--zk-border); color: var(--zk-text); }
+  .node.dp { background: var(--dp-bg); border-color: var(--dp-border); color: var(--dp-text); }
+  .node.coord { background: var(--coord-bg); border-color: var(--coord-border); color: var(--coord-text); }
+  .node.chain { background: var(--chain-bg); border-color: var(--chain-border); color: var(--chain-text); }
+  .node.ml { background: var(--ml-bg); border-color: var(--ml-border); color: var(--ml-text); }
+
+  /* Metrics */
+  .metrics-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem; margin-bottom: 1.5rem;
+  }
+  .metric-card {
+    background: white; border-radius: 8px; padding: 0.8rem 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08); text-align: center;
+  }
+  .metric-card .metric-label { font-size: 0.7rem; color: var(--eth-gray); text-transform: uppercase; letter-spacing: 0.04em; }
+  .metric-card .metric-value { font-size: 1.4rem; font-weight: 700; color: var(--eth-purple); margin: 0.2rem 0; }
+  .metric-card .metric-sub { font-size: 0.7rem; color: #888; }
+
+  /* Budget bar */
+  .budget-bar-container {
+    background: white; border-radius: 8px; padding: 1rem 1.2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 1.5rem;
+  }
+  .budget-bar-container h3 { font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--eth-gray); }
+  .budget-bar {
+    height: 24px; background: #e8e8e8; border-radius: 12px; overflow: hidden;
+    position: relative;
+  }
+  .budget-fill {
+    height: 100%; border-radius: 12px; transition: width 0.5s ease;
+    background: linear-gradient(90deg, #4CAF50, #FFC107, #F44336);
+  }
+  .budget-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 0.72rem; font-weight: 600; color: #333;
+  }
+
+  /* Log */
+  .log-section { margin-bottom: 1.5rem; }
+  .log-section h2 {
+    font-size: 1.1rem; color: var(--eth-purple); margin-bottom: 0.8rem;
+    border-bottom: 2px solid var(--eth-purple); padding-bottom: 0.3rem;
+  }
+  .log-table {
+    width: 100%; border-collapse: collapse; background: white;
+    border-radius: 8px; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .log-table th {
+    background: var(--eth-light); color: var(--eth-gray);
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em;
+    padding: 0.6rem 0.8rem; text-align: left;
+  }
+  .log-table td {
+    padding: 0.5rem 0.8rem; font-size: 0.78rem; border-top: 1px solid #eee;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .log-table tr.new { animation: flashRow 0.8s ease; }
+  @keyframes flashRow {
+    0% { background: #e8f5e9; } 100% { background: white; }
+  }
+  .status-badge {
+    display: inline-block; padding: 0.15rem 0.5rem; border-radius: 10px;
+    font-size: 0.68rem; font-weight: 600;
+  }
+  .status-badge.verified { background: #e8f5e9; color: #2e7d32; }
+  .status-badge.rejected { background: #ffebee; color: #c62828; }
+  .status-badge.halted { background: #fff3e0; color: #e65100; }
+
+  /* Charts */
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .chart-card {
+    background: white; border-radius: 8px; padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .chart-card h3 { font-size: 0.85rem; color: var(--eth-gray); margin-bottom: 0.5rem; }
+  canvas { width: 100% !important; height: 200px !important; }
+
+  .footer {
+    text-align: center; padding: 1.5rem; color: #999; font-size: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .arch-grid { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Verified Federated Learning with DP-SGD & zkVM Proofs</h1>
+  <p>Interactive prototype demonstrating privacy-preserving multi-institutional AI training
+     for urban building maintenance in Hong Kong, with on-chain privacy budget enforcement.</p>
+</div>
+
+<div class="container">
+  <!-- Controls -->
+  <div class="controls">
+    <div>
+      <label>Epsilon/round</label><br>
+      <input type="range" id="epsilon" min="0.1" max="2.0" step="0.1" value="0.5">
+      <span class="value" id="epsilonVal">0.5</span>
+    </div>
+    <div>
+      <label>Budget ceiling</label><br>
+      <input type="range" id="budget" min="1" max="10" step="0.5" value="3.0">
+      <span class="value" id="budgetVal">3.0</span>
+    </div>
+    <div>
+      <label>Clip bound C</label><br>
+      <input type="range" id="clip" min="0.1" max="3.0" step="0.1" value="1.0">
+      <span class="value" id="clipVal">1.0</span>
+    </div>
+    <div>
+      <label>Participants</label><br>
+      <input type="range" id="parties" min="2" max="6" step="1" value="4">
+      <span class="value" id="partiesVal">4</span>
+    </div>
+    <button class="btn" id="runBtn" onclick="runSimulation()">Run Training</button>
+    <button class="btn" id="stepBtn" onclick="stepRound()">Step Round</button>
+    <button class="btn reset" onclick="resetSimulation()">Reset</button>
+  </div>
+
+  <!-- Metrics -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Current Round</div>
+      <div class="metric-value" id="metricRound">0</div>
+      <div class="metric-sub">of max training rounds</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Training Loss</div>
+      <div class="metric-value" id="metricLoss">--</div>
+      <div class="metric-sub">MSE on batch</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Epsilon Consumed</div>
+      <div class="metric-value" id="metricEps">0.000</div>
+      <div class="metric-sub" id="metricEpsSub">of 3.0 budget</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Proofs Verified</div>
+      <div class="metric-value" id="metricProofs">0</div>
+      <div class="metric-sub">zkVM + IVC on-chain</div>
+    </div>
+  </div>
+
+  <!-- Budget Bar -->
+  <div class="budget-bar-container">
+    <h3>Privacy Budget Consumption (On-Chain Enforced)</h3>
+    <div class="budget-bar">
+      <div class="budget-fill" id="budgetFill" style="width:0%"></div>
+      <div class="budget-text" id="budgetText">0.000 / 3.000</div>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="arch-section">
+    <h2>System Architecture (Live)</h2>
+    <div class="arch-grid">
+      <div class="arch-col">
+        <div class="arch-col-title" style="background:var(--party-bg);color:var(--party-text);">
+          Participant Layer (Vertical Split)
+        </div>
+        <div class="node party" id="node-bd">
+          <div class="label">Buildings Dept</div>
+          <div class="detail">Features A: age, type, district</div>
+        </div>
+        <div class="node party" id="node-pm">
+          <div class="label">Property Manager</div>
+          <div class="detail">Features B: repairs, access, contractor</div>
+        </div>
+        <div class="node party" id="node-ib">
+          <div class="label">Inspection Body</div>
+          <div class="detail">Features C: scores, defects, compliance</div>
+        </div>
+        <div class="node party" id="node-oc">
+          <div class="label">Owners' Corporation</div>
+          <div class="detail">Features D: finances, votes, insurance</div>
+        </div>
+      </div>
+      <div class="arch-col">
+        <div class="arch-col-title" style="background:var(--zk-bg);color:var(--zk-text);">
+          Proof Layer
+        </div>
+        <div class="node zk" id="node-zkvm">
+          <div class="label">zkVM Prover</div>
+          <div class="detail">SP1 / RISC Zero (mocked)</div>
+        </div>
+        <div class="node dp" id="node-dp">
+          <div class="label">DP-SGD Engine</div>
+          <div class="detail">Clip + Noise + Renyi Accounting</div>
+        </div>
+        <div class="node zk" id="node-ivc" style="border-style:dashed;">
+          <div class="label">IVC Aggregation</div>
+          <div class="detail">pi_1 || ... || pi_K -> pi_agg</div>
+        </div>
+        <div class="node coord" id="node-coord">
+          <div class="label">Coordinator</div>
+          <div class="detail">Top model g(e1||...||eK)</div>
+        </div>
+      </div>
+      <div class="arch-col">
+        <div class="arch-col-title" style="background:var(--chain-bg);color:var(--chain-text);">
+          On-Chain Layer (Ethereum L2)
+        </div>
+        <div class="node chain" id="node-verify">
+          <div class="label">Verifier Contract</div>
+          <div class="detail">zkVM proof check</div>
+        </div>
+        <div class="node chain" id="node-state">
+          <div class="label">State Root</div>
+          <div class="detail">Model hash (Merkle)</div>
+        </div>
+        <div class="node chain" id="node-budget">
+          <div class="label">Privacy Budget</div>
+          <div class="detail">eps_total tracker</div>
+        </div>
+        <div class="node chain" id="node-audit">
+          <div class="label">Audit Log</div>
+          <div class="detail">Per-round record</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Training Loss Over Rounds</h3>
+      <canvas id="lossChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Cumulative Privacy Budget</h3>
+      <canvas id="budgetChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Audit Log Table -->
+  <div class="log-section">
+    <h2>On-Chain Audit Log</h2>
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th>Round</th>
+          <th>eps_round</th>
+          <th>eps_total</th>
+          <th>Merkle Root</th>
+          <th>Proofs</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="logBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  Verified Federated Learning Demo &mdash; Ethereum Foundation PhD Fellowship 2026<br>
+  Xu Pei (CityU HK) &amp; Kurt Pan (PolyU HK) &mdash; MIT License
+</div>
+
+<script>
+// Minimal simulation engine (mirrors the Rust pipeline logic)
+const state = {
+  round: 0,
+  epsilon_consumed: 0,
+  training_halted: false,
+  losses: [],
+  epsilons: [],
+  proofs_total: 0,
+  weights: null,
+  model_root: '0x0000000000000000',
+  running: false,
+};
+
+function getConfig() {
+  return {
+    epsilon: parseFloat(document.getElementById('epsilon').value),
+    budget: parseFloat(document.getElementById('budget').value),
+    clip: parseFloat(document.getElementById('clip').value),
+    parties: parseInt(document.getElementById('parties').value),
+  };
+}
+
+// Update displayed values
+['epsilon','budget','clip','parties'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    document.getElementById(id+'Val').textContent = el.value;
+    if (id === 'budget') {
+      document.getElementById('metricEpsSub').textContent = `of ${el.value} budget`;
+    }
+  });
+});
+
+// SHA-256 mock (simple hash for demo)
+function mockHash(input) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < input.length; i++) {
+    h ^= input.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return '0x' + (h >>> 0).toString(16).padStart(8,'0') +
+         ((h * 31) >>> 0).toString(16).padStart(8,'0');
+}
+
+// Simulate one training round
+function simulateRound() {
+  const cfg = getConfig();
+  if (state.training_halted) return null;
+
+  state.round++;
+  const noise_sigma = cfg.clip * Math.sqrt(2 * Math.log(1.25 / 1e-5)) / cfg.epsilon;
+
+  // Simulate forward + backward + loss
+  // Loss decays with noise-adjusted convergence
+  const base_loss = 0.5 * Math.exp(-0.15 * state.round) + 0.02;
+  const noise_penalty = 0.03 * noise_sigma / (1 + state.round * 0.1);
+  const loss = base_loss + noise_penalty + (Math.random() - 0.5) * 0.01;
+
+  // Generate per-participant proofs
+  const proofs = [];
+  for (let p = 0; p < cfg.parties; p++) {
+    proofs.push({
+      id: ['buildings_dept','property_mgr','inspection_body','owners_corp','contractor','ura'][p],
+      hash: mockHash(`proof_r${state.round}_p${p}_e${cfg.epsilon}`),
+      valid: true,
+    });
+  }
+  state.proofs_total += cfg.parties;
+
+  // IVC aggregation
+  const agg_hash = mockHash(proofs.map(p => p.hash).join('||'));
+
+  // On-chain: consume budget
+  const new_eps = state.epsilon_consumed + cfg.epsilon;
+  if (new_eps > cfg.budget) {
+    state.training_halted = true;
+    return {
+      round: state.round,
+      loss, epsilon_round: cfg.epsilon,
+      epsilon_total: state.epsilon_consumed,
+      merkle_root: state.model_root,
+      proofs: cfg.parties,
+      status: 'halted',
+      agg_hash,
+    };
+  }
+
+  state.epsilon_consumed = new_eps;
+  state.model_root = mockHash(state.model_root + `_r${state.round}`);
+
+  state.losses.push(loss);
+  state.epsilons.push(new_eps);
+
+  return {
+    round: state.round,
+    loss,
+    epsilon_round: cfg.epsilon,
+    epsilon_total: new_eps,
+    merkle_root: state.model_root,
+    proofs: cfg.parties,
+    status: 'verified',
+    agg_hash,
+  };
+}
+
+// Update UI
+function updateUI(result) {
+  if (!result) return;
+  const cfg = getConfig();
+
+  document.getElementById('metricRound').textContent = state.round;
+  document.getElementById('metricLoss').textContent = result.loss.toFixed(4);
+  document.getElementById('metricEps').textContent = state.epsilon_consumed.toFixed(3);
+  document.getElementById('metricProofs').textContent = state.proofs_total;
+
+  // Budget bar
+  const pct = Math.min((state.epsilon_consumed / cfg.budget) * 100, 100);
+  document.getElementById('budgetFill').style.width = pct + '%';
+  document.getElementById('budgetText').textContent =
+    `${state.epsilon_consumed.toFixed(3)} / ${cfg.budget.toFixed(3)}`;
+
+  // Audit log row
+  const tbody = document.getElementById('logBody');
+  const tr = document.createElement('tr');
+  tr.className = 'new';
+  const statusClass = result.status === 'verified' ? 'verified' :
+                      result.status === 'halted' ? 'halted' : 'rejected';
+  tr.innerHTML = `
+    <td>${result.round}</td>
+    <td>${result.epsilon_round.toFixed(4)}</td>
+    <td>${result.epsilon_total.toFixed(4)}</td>
+    <td>${result.merkle_root.slice(0,18)}...</td>
+    <td>${result.proofs} zkVM + 1 IVC</td>
+    <td><span class="status-badge ${statusClass}">${result.status}</span></td>
+  `;
+  tbody.insertBefore(tr, tbody.firstChild);
+
+  // Animate architecture nodes
+  animateNodes(result);
+
+  // Update charts
+  drawCharts();
+}
+
+function animateNodes(result) {
+  const sequence = [
+    ['node-bd','node-pm','node-ib','node-oc'],
+    ['node-dp'],
+    ['node-zkvm'],
+    ['node-ivc'],
+    ['node-coord'],
+    ['node-verify'],
+    ['node-state','node-budget'],
+    ['node-audit'],
+  ];
+  sequence.forEach((ids, i) => {
+    setTimeout(() => {
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.classList.add('active'); }
+      });
+    }, i * 150);
+    setTimeout(() => {
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.classList.remove('active'); }
+      });
+    }, i * 150 + 400);
+  });
+}
+
+// Simple canvas chart drawing
+function drawCharts() {
+  drawLineChart('lossChart', state.losses, '#637FEA', 'Loss');
+  drawLineChart('budgetChart', state.epsilons, '#F44336', 'Epsilon');
+}
+
+function drawLineChart(canvasId, data, color, label) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width = canvas.offsetWidth * 2;
+  const H = canvas.height = 400;
+  ctx.clearRect(0, 0, W, H);
+
+  if (data.length === 0) {
+    ctx.fillStyle = '#ccc';
+    ctx.font = '24px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('No data yet', W/2, H/2);
+    return;
+  }
+
+  const pad = { t: 30, r: 30, b: 40, l: 60 };
+  const plotW = W - pad.l - pad.r;
+  const plotH = H - pad.t - pad.b;
+
+  const maxY = Math.max(...data) * 1.15;
+  const minY = 0;
+
+  // Grid
+  ctx.strokeStyle = '#eee'; ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.t + plotH * (1 - i/4);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
+    ctx.fillStyle = '#999'; ctx.font = '20px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText((minY + (maxY - minY) * i/4).toFixed(3), pad.l - 8, y + 6);
+  }
+
+  // X axis labels
+  ctx.fillStyle = '#999'; ctx.font = '20px sans-serif'; ctx.textAlign = 'center';
+  data.forEach((_, i) => {
+    const x = pad.l + (i / Math.max(data.length - 1, 1)) * plotW;
+    ctx.fillText(i + 1, x, H - 10);
+  });
+
+  // Line
+  ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.lineJoin = 'round';
+  ctx.beginPath();
+  data.forEach((v, i) => {
+    const x = pad.l + (i / Math.max(data.length - 1, 1)) * plotW;
+    const y = pad.t + plotH * (1 - (v - minY) / (maxY - minY));
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Points
+  ctx.fillStyle = color;
+  data.forEach((v, i) => {
+    const x = pad.l + (i / Math.max(data.length - 1, 1)) * plotW;
+    const y = pad.t + plotH * (1 - (v - minY) / (maxY - minY));
+    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+  });
+
+  // Budget ceiling line for epsilon chart
+  if (canvasId === 'budgetChart') {
+    const cfg = getConfig();
+    const ceilY = pad.t + plotH * (1 - (cfg.budget - minY) / (maxY - minY));
+    if (ceilY >= pad.t) {
+      ctx.strokeStyle = '#F44336'; ctx.lineWidth = 2;
+      ctx.setLineDash([8, 4]);
+      ctx.beginPath(); ctx.moveTo(pad.l, ceilY); ctx.lineTo(W - pad.r, ceilY); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#F44336'; ctx.font = '20px sans-serif'; ctx.textAlign = 'left';
+      ctx.fillText('Budget Ceiling', pad.l + 5, ceilY - 8);
+    }
+  }
+}
+
+// Run full simulation
+async function runSimulation() {
+  if (state.running) return;
+  state.running = true;
+  document.getElementById('runBtn').disabled = true;
+
+  const cfg = getConfig();
+  const maxRounds = Math.ceil(cfg.budget / cfg.epsilon) + 1;
+
+  for (let i = 0; i < maxRounds; i++) {
+    if (state.training_halted) break;
+    const result = simulateRound();
+    updateUI(result);
+    await new Promise(r => setTimeout(r, 500));
+  }
+
+  state.running = false;
+  document.getElementById('runBtn').disabled = false;
+}
+
+function stepRound() {
+  if (state.training_halted) return;
+  const result = simulateRound();
+  updateUI(result);
+}
+
+function resetSimulation() {
+  state.round = 0;
+  state.epsilon_consumed = 0;
+  state.training_halted = false;
+  state.losses = [];
+  state.epsilons = [];
+  state.proofs_total = 0;
+  state.model_root = '0x0000000000000000';
+  state.running = false;
+
+  document.getElementById('metricRound').textContent = '0';
+  document.getElementById('metricLoss').textContent = '--';
+  document.getElementById('metricEps').textContent = '0.000';
+  document.getElementById('metricProofs').textContent = '0';
+  document.getElementById('budgetFill').style.width = '0%';
+
+  const cfg = getConfig();
+  document.getElementById('budgetText').textContent = `0.000 / ${cfg.budget.toFixed(3)}`;
+  document.getElementById('logBody').innerHTML = '';
+  document.getElementById('runBtn').disabled = false;
+
+  drawCharts();
+}
+
+// Initialize charts
+drawCharts();
+</script>
+</body>
+</html>

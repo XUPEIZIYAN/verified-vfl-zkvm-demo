@@ -1,0 +1,141 @@
+{
+  "audit_log": [
+    {
+      "aggregated_proof_hash": "87d11e2864fcee299a40a909b0fd9ab583bbfece025c644bf01d0353dfd3e8a9",
+      "epsilon_cumulative": 0.5,
+      "epsilon_round": 0.5,
+      "model_merkle_root": "0xbfd6ffd88ad4cb0cefbfbff19f7238e26963a05a63739b629f6eedb00632b3ec",
+      "round": 1,
+      "timestamp": "2026-04-01T10:00:00Z",
+      "verified": true
+    },
+    {
+      "aggregated_proof_hash": "f1862467cb6d0bf27eda85a7a06c29fe0cd9e9acc9c34d20537d2e11eac2b225",
+      "epsilon_cumulative": 1.0,
+      "epsilon_round": 0.5,
+      "model_merkle_root": "0x6228a4bcb71ee5fceade1c545e3f9b62281491856a8808d2ec13594062a141ca",
+      "round": 2,
+      "timestamp": "2026-04-02T10:00:00Z",
+      "verified": true
+    },
+    {
+      "aggregated_proof_hash": "20deafe3352e9103f39f00b5a8fa5b2a1987138234a98be3b048f78f06faa158",
+      "epsilon_cumulative": 1.5,
+      "epsilon_round": 0.5,
+      "model_merkle_root": "0x12f5276dda7bb508f1c916942f59083951fa6ba741ed0ad2b4f68c7c15ad4c80",
+      "round": 3,
+      "timestamp": "2026-04-03T10:00:00Z",
+      "verified": true
+    },
+    {
+      "aggregated_proof_hash": "24458443f7d7364fc2efcc5f4ff03877de793f5c6ae187079865bb4fb0d3064e",
+      "epsilon_cumulative": 2.0,
+      "epsilon_round": 0.5,
+      "model_merkle_root": "0x69d7e6e92f4fc6a1ad5f97c70d77b17db7f830efbeb5e74da1d5196e959643b1",
+      "round": 4,
+      "timestamp": "2026-04-04T10:00:00Z",
+      "verified": true
+    },
+    {
+      "aggregated_proof_hash": "e91333bd90950b3ae810d50434d47a1ae3bc75f333ee561006ebc456eb0e0f7c",
+      "epsilon_cumulative": 2.5,
+      "epsilon_round": 0.5,
+      "model_merkle_root": "0xc8f4bc11f419fe5fc418715b64b05559572241b3adc26b95be15b208879dbae6",
+      "round": 5,
+      "timestamp": "2026-04-05T10:00:00Z",
+      "verified": true
+    },
+    {
+      "aggregated_proof_hash": "ac94f3caaf867eaea00c0549458f75a7fefd8ef58241c7f4e8439f574f556490",
+      "epsilon_cumulative": 3.0,
+      "epsilon_round": 0.5,
+      "model_merkle_root": "0xc52f27e3c8f41b01e774309ee7beebb2dd9364044d35830bf95c6f86fa295e30",
+      "round": 6,
+      "timestamp": "2026-04-06T10:00:00Z",
+      "verified": true
+    }
+  ],
+  "config": {
+    "clip_bound": 1.0,
+    "delta": 0.00001,
+    "epsilon_per_round": 0.5,
+    "num_buildings": 10,
+    "num_participants": 4,
+    "total_budget": 3.0
+  },
+  "final_state": {
+    "epsilon_budget": 3.0,
+    "epsilon_consumed": 3.0,
+    "model_merkle_root": "0xc52f27e3c8f41b01e774309ee7beebb2dd9364044d35830bf95c6f86fa295e30",
+    "rounds_completed": 6,
+    "training_halted": false
+  },
+  "rounds": [
+    {
+      "budget_remaining": 2.5,
+      "epsilon_round": 0.5,
+      "epsilon_total": 0.5,
+      "loss": 0.07683332934007381,
+      "merkle_root": "0xbfd6ffd88ad4cb0c",
+      "round": 1,
+      "training_halted": false,
+      "verified": true
+    },
+    {
+      "budget_remaining": 2.0,
+      "epsilon_round": 0.5,
+      "epsilon_total": 1.0,
+      "loss": 0.09748955992089023,
+      "merkle_root": "0x6228a4bcb71ee5fc",
+      "round": 2,
+      "training_halted": false,
+      "verified": true
+    },
+    {
+      "budget_remaining": 1.5,
+      "epsilon_round": 0.5,
+      "epsilon_total": 1.5,
+      "loss": 0.11390276313697587,
+      "merkle_root": "0x12f5276dda7bb508",
+      "round": 3,
+      "training_halted": false,
+      "verified": true
+    },
+    {
+      "budget_remaining": 1.0,
+      "epsilon_round": 0.5,
+      "epsilon_total": 2.0,
+      "loss": 0.04562578392518009,
+      "merkle_root": "0x69d7e6e92f4fc6a1",
+      "round": 4,
+      "training_halted": false,
+      "verified": true
+    },
+    {
+      "budget_remaining": 0.5,
+      "epsilon_round": 0.5,
+      "epsilon_total": 2.5,
+      "loss": 0.03127669809530015,
+      "merkle_root": "0xc8f4bc11f419fe5f",
+      "round": 5,
+      "training_halted": false,
+      "verified": true
+    },
+    {
+      "budget_remaining": 0.0,
+      "epsilon_round": 0.5,
+      "epsilon_total": 3.0,
+      "loss": 0.025611536815669668,
+      "merkle_root": "0xc52f27e3c8f41b01",
+      "round": 6,
+      "training_halted": false,
+      "verified": true
+    },
+    {
+      "loss": 0.06414507062915513,
+      "reason": "Budget exceeded: consuming 0.5000 would bring total to 3.5000, exceeding ceiling 3.0000. Training permanently halted.",
+      "rejected": true,
+      "round": 7
+    }
+  ]
+}
